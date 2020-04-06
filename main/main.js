@@ -35,3 +35,22 @@ function addItemDetailsToItemCountList(itemCountList, allItems) {
   });
 }
 
+function calculateSubTotal(itemDetailList) {
+  return itemDetailList.map(item => {
+    return {
+      ...item,
+      subTotal: parseInt(item.count * item.price)
+    }
+  })
+}
+
+function calculateTotal(itemCountWithSubTotal) {
+  const total = itemCountWithSubTotal.reduce((accu, curr) => {
+    return accu + curr.subTotal
+  }, 0);
+  return {
+    total: parseInt(total),
+    itemCountWithSubTotal
+  };
+}
+
