@@ -140,3 +140,72 @@ describe('Decode Item', () => {
 
 });
 
+describe('Generate Receipt', () => {
+  it('Calculate SubTotal', () => {
+    const inputs = [{
+      itemId: 'ITEM000000',
+      count: 5,
+      unit: 'bottle',
+      price: 3.00
+    }, {
+      itemId: 'ITEM000001',
+      count: 2,
+      unit: 'bottle',
+      price: 3.00
+    }, {
+      itemId: 'ITEM000004',
+      count: 1,
+      unit: 'a',
+      price: 2.00
+    }];
+
+    const mockData = [{
+      itemId: 'ITEM000000',
+      count: 5,
+      unit: 'bottle',
+      price: 3.00,
+      subTotal: 15
+    }, {
+      itemId: 'ITEM000001',
+      count: 2,
+      unit: 'bottle',
+      price: 3.00,
+      subTotal: 6
+    }, {
+      itemId: 'ITEM000004',
+      count: 1,
+      unit: 'a',
+      price: 2.00,
+      subTotal: 2
+    }];
+    const itemDetailsListWithSubTotal = calculateSubTotal(inputs);
+    itemDetailsListWithSubTotal.sort();
+    expect(itemDetailsListWithSubTotal[0]).toEqual(mockData[0]);
+    expect(itemDetailsListWithSubTotal[1]).toEqual(mockData[1]);
+    expect(itemDetailsListWithSubTotal[2]).toEqual(mockData[2]);
+  });
+
+  it('Calculate Total', () => {
+    const inputs = [{
+      itemId: 'ITEM000000',
+      count: 5,
+      unit: 'bottle',
+      price: 3.00,
+      subTotal: 15
+    }, {
+      itemId: 'ITEM000001',
+      count: 2,
+      unit: 'bottle',
+      price: 3.00,
+      subTotal: 6
+    }, {
+      itemId: 'ITEM000004',
+      count: 1,
+      unit: 'a',
+      price: 2.00,
+      subTotal: 2
+    }];
+    const itemDetailsListWithSubTotal = calculateTotal(inputs);
+    expect(itemDetailsListWithSubTotal.total).toEqual(23);
+  });
+});
