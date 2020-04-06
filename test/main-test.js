@@ -31,3 +31,112 @@ Total：23 (yuan)
   });
 });
 
+describe('Decode Item', () => {
+  it('Get Item Count', () => {
+    const inputs = [
+      'ITEM000000',
+      'ITEM000000',
+      'ITEM000000',
+      'ITEM000000',
+      'ITEM000000',
+      'ITEM000001',
+      'ITEM000001',
+      'ITEM000004'
+    ];
+
+    const mockData = [{
+      itemId: 'ITEM000000',
+      count: 5
+    }, {
+      itemId: 'ITEM000001',
+      count: 2
+    }, {
+      itemId: 'ITEM000004',
+      count: 1
+    }];
+    const itemCountList = getItemCount(inputs);
+    itemCountList.sort();
+    expect(itemCountList[0]).toEqual(mockData[0]);
+    expect(itemCountList[1]).toEqual(mockData[1]);
+    expect(itemCountList[2]).toEqual(mockData[2]);
+  });
+
+
+  it('Add Item Details to Item Count List', () => {
+    const allItems = [
+      {
+        barcode: 'ITEM000000',
+        name: 'Coca-Cola',
+        unit: 'bottle',
+        price: 3.00
+      },
+      {
+        barcode: 'ITEM000001',
+        name: 'Sprite',
+        unit: 'bottle',
+        price: 3.00
+      },
+      {
+        barcode: 'ITEM000002',
+        name: 'Apple',
+        unit: 'pound',
+        price: 5.50
+      },
+      {
+        barcode: 'ITEM000003',
+        name: 'Litchi',
+        unit: 'pound',
+        price: 15.00
+      },
+      {
+        barcode: 'ITEM000004',
+        name: 'Battery',
+        unit: 'a',
+        price: 2.00
+      },
+      {
+        barcode: 'ITEM000005',
+        name: 'Instant Noodles',
+        unit: 'bag',
+        price: 4.50
+      }
+    ];
+    const inputs = [{
+      itemId: 'ITEM000000',
+      count: 5
+    }, {
+      itemId: 'ITEM000001',
+      count: 2
+    }, {
+      itemId: 'ITEM000004',
+      count: 1
+    }];
+
+    const mockData = [{
+      itemId: 'ITEM000000',
+      count: 5,
+      name: 'Coca-Cola',
+      unit: 'bottle',
+      price: 3.00
+    }, {
+      itemId: 'ITEM000001',
+      count: 2,
+      name: 'Sprite',
+      unit: 'bottle',
+      price: 3.00
+    }, {
+      itemId: 'ITEM000004',
+      count: 1,
+      name: 'Battery',
+      unit: 'a',
+      price: 2.00
+    }];
+    const itemDetailsList = addItemDetailsToItemCountList(inputs, allItems);
+    itemDetailsList.sort();
+    expect(itemDetailsList[0]).toEqual(mockData[0]);
+    expect(itemDetailsList[1]).toEqual(mockData[1]);
+    expect(itemDetailsList[2]).toEqual(mockData[2]);
+  });
+
+});
+
