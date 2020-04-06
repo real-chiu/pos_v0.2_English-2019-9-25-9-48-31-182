@@ -209,3 +209,43 @@ describe('Generate Receipt', () => {
     expect(itemDetailsListWithSubTotal.total).toEqual(23);
   });
 });
+
+describe('Present Receipt', () => {
+  it('Present Receipt'), () => {
+    const inputs = {
+      total: 23,
+      itemDetailsListWithSubTotal: [{
+        itemId: 'ITEM000000',
+        count: 5,
+        unit: 'bottle',
+        price: 3.00,
+        subTotal: 15
+      }, {
+        itemId: 'ITEM000001',
+        count: 2,
+        unit: 'bottle',
+        price: 3.00,
+        subTotal: 6
+      }, {
+        itemId: 'ITEM000004',
+        count: 1,
+        unit: 'a',
+        price: 2.00,
+        subTotal: 2
+      }]
+    };
+
+    const receipt = presentReceipt(inputs);
+
+    const expectText = `***<store earning no money>Receipt ***
+    Name：Coca-Cola，Quantity：5 bottles，Unit：3.00 (yuan)，Subtotal：15.00 (yuan)
+    Name：Sprite，Quantity：2 bottles，Unit：3.00 (yuan)，Subtotal：6.00 (yuan)
+    Name：Battery，Quantity：1 a，Unit：2.00 (yuan)，Subtotal：2.00 (yuan)
+    ----------------------
+    Total：23.00 (yuan)
+    **********************`;
+
+    expect(receipt).toEqual(expectText);
+  }
+
+});
