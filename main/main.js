@@ -1,7 +1,10 @@
 'use strict';
 
 function printReceipt(inputs) {
-
+  const itemDetailList = decodeItem(inputs);
+  const itemDetailListWithTotal = generateReceipt(itemDetailList);
+  const receipt = presentReceipt(itemDetailListWithTotal);
+  console.log(receipt);
 }
 
 function getItemCount(itemList) {
@@ -54,3 +57,24 @@ function calculateTotal(itemCountWithSubTotal) {
   };
 }
 
+function presentReceipt(itemDetailListWithTotal) {
+  let receipt = `***<store earning no money>Receipt ***\n`;
+  itemDetailListWithTotal.itemCountWithSubTotal.forEach(item => {
+    receipt += `Name: ${item.name}, Quantity: ${item.count} ${item.unit}${item.count === 1 ? '' : 's'}, Unit: ${item.price} (yuan), Subtotal: ${item.subTotal} (yuan)\n`; 
+  })
+  receipt += `----------------------
+Total：${itemDetailListWithTotal.total} (yuan)
+**********************`
+  return receipt;
+}
+
+function decodeItem(inputs) {
+  const allItems = loadAllItems();
+  const itemCountList = getItemCount(inputs);
+  return addItemDetailsToItemCountList(itemCountList, allItems);
+}
+
+function generateReceipt(itemDetailList) {
+  const itemCountWithSubTotal = calculateSubTotal(itemDetailList);
+  return calculateTotal(itemCountWithSubTotal);
+}
